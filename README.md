@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Simple QR Code Generator
 
 A basic full-stack web application that generates QR codes from text or URLs. Built with React frontend and Node.js backend.
@@ -66,3 +67,7 @@ qr-code-generator/
 ## License
 
 MIT
+=======
+# qr-code-generator
+A simple QR Code Generator built with React + Node.js
+>>>>>>> c375fc2fd463a5a1808765d129334f27f6e880f3

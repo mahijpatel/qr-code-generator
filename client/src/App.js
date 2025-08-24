@@ -39,6 +39,18 @@ function App() {
     }
   };
 
+  const downloadQRCode = () => {
+    if (qrCode) {
+      // Create a temporary link element to download the QR code
+      const link = document.createElement('a');
+      link.href = qrCode;
+      link.download = `qr-code-${Date.now()}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  };
+
   const handleInputChange = (e) => {
     setInputText(e.target.value);
     if (error) setError('');
@@ -85,15 +97,23 @@ function App() {
           <div className="qr-section">
             <h3>Generated QR Code</h3>
             <img src={qrCode} alt="QR Code" className="qr-image" />
-            <button
-              onClick={() => {
-                setQrCode('');
-                setInputText('');
-              }}
-              className="clear-btn"
-            >
-              Generate New
-            </button>
+            <div className="button-group">
+              <button
+                onClick={downloadQRCode}
+                className="download-btn"
+              >
+                Download PNG
+              </button>
+              <button
+                onClick={() => {
+                  setQrCode('');
+                  setInputText('');
+                }}
+                className="clear-btn"
+              >
+                Generate New
+              </button>
+            </div>
           </div>
         )}
       </div>

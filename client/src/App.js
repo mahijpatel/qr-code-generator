@@ -22,7 +22,9 @@ function App() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ text: inputText }),
+        body: JSON.stringify({ 
+          text: inputText.trim()
+        }),
       });
 
       const data = await response.json();
@@ -33,6 +35,7 @@ function App() {
         setError(data.error || 'Failed to generate QR code');
       }
     } catch (err) {
+      console.error('Error:', err);
       setError('Failed to connect to server');
     } finally {
       setLoading(false);
@@ -41,7 +44,6 @@ function App() {
 
   const downloadQRCode = () => {
     if (qrCode) {
-      // Create a temporary link element to download the QR code
       const link = document.createElement('a');
       link.href = qrCode;
       link.download = `qr-code-${Date.now()}.png`;
@@ -62,6 +64,12 @@ function App() {
     }
   };
 
+  const clearAll = () => {
+    setQrCode('');
+    setInputText('');
+    setError('');
+  };
+
   return (
     <div className="app">
       <div className="container">
@@ -69,19 +77,29 @@ function App() {
         <p>Enter text or URL to generate a QR code</p>
         
         <div className="input-section">
-          <input
-            type="text"
-            value={inputText}
-            onChange={handleInputChange}
-            onKeyPress={handleKeyPress}
-            placeholder="Enter text or URL..."
-            className="text-input"
-          />
+          <div className="input-group">
+            <label htmlFor="input-text">Text or URL:</label>
+            <input
+              id="input-text"
+              type="text"
+              value={inputText}
+              onChange={handleInputChange}
+              onKeyPress={handleKeyPress}
+              placeholder="Enter text or URL..."
+              className="text-input"
+              autoComplete="off"
+              autoFocus
+              inputMode="text"
+              enterKeyHint="go"
+              spellCheck="false"
+            />
+          </div>
           
           <button
             onClick={generateQRCode}
             disabled={loading}
             className="generate-btn"
+            type="button"
           >
             {loading ? 'Generating...' : 'Generate QR Code'}
           </button>
@@ -97,19 +115,21 @@ function App() {
           <div className="qr-section">
             <h3>Generated QR Code</h3>
             <img src={qrCode} alt="QR Code" className="qr-image" />
+            <div className="qr-info">
+              <p><strong>Content:</strong> {inputText}</p>
+            </div>
             <div className="button-group">
               <button
                 onClick={downloadQRCode}
                 className="download-btn"
+                type="button"
               >
                 Download PNG
               </button>
               <button
-                onClick={() => {
-                  setQrCode('');
-                  setInputText('');
-                }}
+                onClick={clearAll}
                 className="clear-btn"
+                type="button"
               >
                 Generate New
               </button>

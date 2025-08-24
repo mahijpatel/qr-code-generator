@@ -32,19 +32,97 @@ p {
   margin-bottom: 20px;
 }
 
+.type-selection {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 25px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 12px 20px;
+  background: #f8f9fa;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  transition: all 0.3s;
+  min-width: 140px;
+  justify-content: center;
+}
+
+.radio-label:hover {
+  border-color: #667eea;
+  background: #f0f4ff;
+}
+
+.radio-label input[type="radio"] {
+  margin: 0;
+  width: 18px;
+  height: 18px;
+  accent-color: #667eea;
+}
+
+.radio-text {
+  font-weight: bold;
+  color: #333;
+  font-size: 14px;
+}
+
+.radio-label input[type="radio"]:checked + .radio-text {
+  color: #667eea;
+}
+
+.radio-label:has(input[type="radio"]:checked) {
+  border-color: #667eea;
+  background: #e8f2ff;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  font-weight: bold;
+  font-size: 14px;
+}
+
 .text-input {
   width: 100%;
   padding: 15px;
   border: 2px solid #ddd;
   border-radius: 8px;
   font-size: 16px;
-  margin-bottom: 15px;
   box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  touch-action: manipulation;
 }
 
 .text-input:focus {
   outline: none;
   border-color: #667eea;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.text-input:focus-visible {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+.input-hint {
+  display: block;
+  margin-top: 5px;
+  color: #888;
+  font-size: 12px;
+  font-style: italic;
 }
 
 .generate-btn {
@@ -58,10 +136,18 @@ p {
   font-weight: bold;
   cursor: pointer;
   transition: background 0.3s;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  min-height: 44px;
 }
 
 .generate-btn:hover {
   background: #5a6fd8;
+}
+
+.generate-btn:active {
+  background: #4a5bc7;
+  transform: translateY(1px);
 }
 
 .generate-btn:disabled {
@@ -93,10 +179,30 @@ p {
 
 .qr-image {
   max-width: 300px;
+  width: 100%;
   height: auto;
   border: 2px solid #ddd;
   border-radius: 8px;
   margin-bottom: 20px;
+}
+
+.qr-info {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.qr-info p {
+  margin: 8px 0;
+  text-align: left;
+  color: #333;
+  font-size: 14px;
+}
+
+.qr-info strong {
+  color: #667eea;
 }
 
 .button-group {
@@ -106,32 +212,96 @@ p {
   flex-wrap: wrap;
 }
 
-.download-btn {
-  padding: 10px 20px;
-  background: #4caf50;
-  color: white;
+.download-btn, .clear-btn {
+  padding: 12px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
-  transition: background 0.3s;
+  transition: all 0.3s;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  min-height: 44px;
+  min-width: 100px;
+}
+
+.download-btn {
+  background: #4caf50;
+  color: white;
 }
 
 .download-btn:hover {
   background: #45a049;
 }
 
+.download-btn:active {
+  background: #3d8b40;
+  transform: translateY(1px);
+}
+
 .clear-btn {
-  padding: 10px 20px;
   background: #666;
   color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background 0.3s;
 }
 
 .clear-btn:hover {
   background: #555;
+}
+
+.clear-btn:active {
+  background: #444;
+  transform: translateY(1px);
+}
+
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+    margin: 10px;
+  }
+  
+  h1 {
+    font-size: 2em;
+  }
+  
+  .type-selection {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .radio-label {
+    width: 100%;
+    max-width: 200px;
+  }
+  
+  .text-input {
+    font-size: 16px; /* Prevents zoom on iOS */
+    padding: 12px;
+  }
+  
+  .generate-btn {
+    padding: 12px;
+    font-size: 16px;
+  }
+  
+  .button-group {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .download-btn, .clear-btn {
+    width: 100%;
+    max-width: 200px;
+  }
+  
+  .qr-image {
+    max-width: 250px;
+  }
+}
+
+/* Prevent zoom on input focus for iOS */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .text-input {
+    font-size: 16px;
+  }
 }
